@@ -34,14 +34,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark overflow-x-hidden">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col overflow-x-hidden`}
       >
         <Web3Provider>
           <ToastProvider>
             <Navbar />
-            <main className="flex-1 pt-16">
+            <main className="flex-1 pt-16 w-full max-w-full overflow-x-hidden">
               {children}
             </main>
             <Footer />
