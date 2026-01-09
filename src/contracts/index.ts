@@ -1,0 +1,1 @@
+export { PredictionMarketABI } from './abi';
