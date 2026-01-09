@@ -1,70 +1,167 @@
 import Link from 'next/link';
 import { MarketList } from '@/components/market/MarketList';
 
+// Recent activity mock data
+const recentActivity = [
+  { user: '0x8f3...a2d', action: 'bought', market: 'BTC $100K', amount: '0.5 ETH', time: '2m ago' },
+  { user: '0x1a2...f8c', action: 'sold', market: 'AI Turing', amount: '0.3 ETH', time: '5m ago' },
+  { user: '0xd4e...9b1', action: 'bought', market: 'ETH 2.0', amount: '1.2 ETH', time: '8m ago' },
+  { user: '0x7c9...3e5', action: 'claimed', market: 'US Election', amount: '2.4 ETH', time: '12m ago' },
+];
+
 export default function HomePage() {
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden py-20 lg:py-28">
-        {/* Background Effects */}
+    <div className="min-h-screen overflow-x-hidden">
+      {/* Testnet Notice */}
+      <div className="bg-[var(--color-warning)]/10 border-b border-[var(--color-warning)]/20 py-2">
+        <p className="text-center text-sm text-[var(--color-warning)]">
+          ⚠️ <strong>Testnet Mode:</strong> This is a demo on Sepolia testnet. Get free test ETH from a{' '}
+          <a href="https://sepoliafaucet.com" target="_blank" rel="noopener noreferrer" className="underline">
+            faucet
+          </a>{' '}
+          to try trading.
+        </p>
+      </div>
+
+      {/* Hero Section - Simplified */}
+      <section className="relative py-16 lg:py-24">
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-primary)]/5 to-transparent" />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[var(--color-primary)]/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[var(--color-secondary)]/20 rounded-full blur-3xl" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20 rounded-full text-sm text-[var(--color-primary)] mb-6 animate-fade-in">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-primary)] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--color-primary)]"></span>
-            </span>
-            Live on Ethereum
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-success)]/10 border border-[var(--color-success)]/20 rounded-full text-sm text-[var(--color-success)] mb-6">
+            <span className="w-2 h-2 rounded-full bg-[var(--color-success)]" />
+            Live on Sepolia Testnet
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-6 animate-slide-up">
-            <span className="text-[var(--text-primary)]">Predict the Future.</span>
-            <br />
-            <span className="gradient-text">Earn Rewards.</span>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+            <span className="text-[var(--text-primary)]">Decentralized</span>{' '}
+            <span className="gradient-text">Prediction Markets</span>
           </h1>
 
-          <p className="text-lg sm:text-xl text-[var(--text-secondary)] max-w-2xl mx-auto mb-8 animate-slide-up" style={{ animationDelay: '100ms' }}>
-            Trade on real-world outcomes with our decentralized prediction market platform.
-            Powered by blockchain technology for transparent and trustless trading.
+          <p className="text-lg text-[var(--text-secondary)] max-w-2xl mx-auto mb-8">
+            Trade on real-world outcomes. Markets resolved by Chainlink oracles.
+            Full transparency, no intermediaries, verifiable on-chain.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-up" style={{ animationDelay: '200ms' }}>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
             <Link
               href="#markets"
-              className="px-8 py-4 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white font-semibold rounded-xl hover:shadow-[var(--shadow-glow)] hover:-translate-y-0.5 transition-all"
+              className="px-8 py-4 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white font-semibold rounded-xl transition-all"
             >
-              Explore Markets
+              Browse Markets
             </Link>
             <Link
-              href="/create"
-              className="px-8 py-4 bg-[var(--bg-elevated)] border border-[var(--border-color)] text-[var(--text-primary)] font-semibold rounded-xl hover:border-[var(--color-primary)] transition-all"
+              href="#how-it-works"
+              className="px-8 py-4 bg-[var(--bg-elevated)] border border-[var(--border-color)] text-[var(--text-primary)] font-semibold rounded-xl transition-all"
             >
-              Create Market
+              How It Works
             </Link>
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-16 max-w-4xl mx-auto animate-fade-in" style={{ animationDelay: '300ms' }}>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto">
             {[
               { label: 'Total Volume', value: '$12.5M+' },
               { label: 'Active Markets', value: '245' },
-              { label: 'Total Traders', value: '15K+' },
-              { label: 'Markets Resolved', value: '1,250+' },
+              { label: 'Traders', value: '15K+' },
+              { label: 'Avg. Settlement', value: '<1 min' },
             ].map((stat) => (
-              <div key={stat.label} className="p-4 bg-[var(--bg-card)]/50 backdrop-blur border border-[var(--border-color)] rounded-xl">
-                <p className="text-2xl sm:text-3xl font-bold gradient-text">{stat.value}</p>
-                <p className="text-sm text-[var(--text-muted)]">{stat.label}</p>
+              <div key={stat.label} className="p-4 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl">
+                <p className="text-2xl font-bold text-[var(--text-primary)]">{stat.value}</p>
+                <p className="text-xs text-[var(--text-muted)]">{stat.label}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* Recent Activity Ticker */}
+      <section className="py-4 bg-[var(--bg-card)] border-y border-[var(--border-color)]">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center gap-6 overflow-x-auto">
+            <span className="text-xs font-medium text-[var(--text-muted)] uppercase whitespace-nowrap">Live Activity</span>
+            {recentActivity.map((activity, i) => (
+              <div key={i} className="flex items-center gap-2 text-sm whitespace-nowrap">
+                <span className="font-mono text-[var(--text-muted)]">{activity.user}</span>
+                <span className={activity.action === 'bought' ? 'text-[var(--color-success)]' : activity.action === 'claimed' ? 'text-[var(--color-warning)]' : 'text-[var(--color-error)]'}>
+                  {activity.action}
+                </span>
+                <span className="text-[var(--text-primary)]">{activity.market}</span>
+                <span className="text-[var(--text-muted)]">•</span>
+                <span className="text-[var(--color-primary)]">{activity.amount}</span>
+                <span className="text-[var(--text-muted)] text-xs">{activity.time}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section id="how-it-works" className="py-16 bg-[var(--bg-secondary)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-[var(--text-primary)] mb-3">How It Works</h2>
+            <p className="text-[var(--text-muted)]">Transparent, trustless, and verifiable</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {[
+              { step: '1', title: 'Create or Find Market', desc: 'Browse existing markets or create your own prediction with clear resolution criteria.' },
+              { step: '2', title: 'Trade Outcome Shares', desc: 'Buy shares for outcomes you believe in. Prices reflect real-time market consensus.' },
+              { step: '3', title: 'Oracle Resolution', desc: 'Markets resolve via Chainlink oracles or designated data sources. No manual intervention.' },
+              { step: '4', title: 'Claim Winnings', desc: 'If your prediction is correct, redeem shares for 1 ETH each. Instant, on-chain settlement.' },
+            ].map((item) => (
+              <div key={item.step} className="relative p-6 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl">
+                <div className="absolute -top-3 left-6 w-8 h-8 bg-[var(--color-primary)] text-white rounded-full flex items-center justify-center text-sm font-bold">
+                  {item.step}
+                </div>
+                <h3 className="text-lg font-semibold text-[var(--text-primary)] mt-4 mb-2">{item.title}</h3>
+                <p className="text-sm text-[var(--text-muted)]">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Oracle Transparency Box */}
+          <div className="mt-12 p-6 bg-[var(--bg-card)] border border-[var(--color-primary)]/30 rounded-xl">
+            <div className="flex items-start gap-4">
+              <div className="p-3 bg-[var(--color-primary)]/10 rounded-lg">
+                <svg className="w-6 h-6 text-[var(--color-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-2">
+                  🔮 Oracle & Resolution Transparency
+                </h3>
+                <p className="text-[var(--text-secondary)] mb-3">
+                  All markets specify their resolution source upfront. We use:
+                </p>
+                <ul className="space-y-2 text-sm text-[var(--text-muted)]">
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-success)]" />
+                    <strong>Chainlink Price Feeds</strong> - For crypto price markets (BTC, ETH, etc.)
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-success)]" />
+                    <strong>UMA Optimistic Oracle</strong> - For event-based markets with dispute resolution
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-success)]" />
+                    <strong>Verified Data Sources</strong> - AP, Reuters, Official Government Data
+                  </li>
+                </ul>
+                <p className="text-xs text-[var(--text-muted)] mt-3">
+                  Each market displays its specific resolution criteria and oracle source.
+                  <Link href="/terms" className="text-[var(--color-primary)] ml-1">Learn more →</Link>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Markets Section */}
-      <section id="markets" className="py-16 bg-[var(--bg-secondary)]">
+      <section id="markets" className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
             <div>
@@ -75,74 +172,46 @@ export default function HomePage() {
                 Trade on the most popular predictions
               </p>
             </div>
-            <Link
-              href="/markets"
-              className="flex items-center gap-2 text-[var(--color-primary)] hover:underline"
-            >
-              View All Markets
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
           </div>
 
           <MarketList showFilters={true} />
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-20">
+      {/* Trust & Security */}
+      <section className="py-16 bg-[var(--bg-secondary)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-[var(--text-primary)] mb-3">
-              Why Choose PredictX?
-            </h2>
-            <p className="text-[var(--text-muted)] max-w-xl mx-auto">
-              Experience the future of prediction markets with cutting-edge blockchain technology
-            </p>
+            <h2 className="text-3xl font-bold text-[var(--text-primary)] mb-3">Why Trust PredictX?</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
-                icon: (
-                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                  </svg>
-                ),
-                title: 'Trustless & Transparent',
-                description: 'All trades are recorded on-chain. No intermediaries, no manipulation, complete transparency.',
+                icon: '🔐',
+                title: 'Non-Custodial',
+                description: 'Your funds stay in your wallet. We never hold your crypto. All trades execute via smart contracts.',
               },
               {
-                icon: (
-                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                ),
-                title: 'Instant Settlement',
-                description: 'Markets resolve automatically with smart contracts. Claim your winnings instantly.',
+                icon: '📜',
+                title: 'Open Source',
+                description: 'Smart contracts are verified on Etherscan. Anyone can audit the code and verify the logic.',
               },
               {
-                icon: (
-                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                ),
-                title: 'Low Fees',
-                description: 'Minimal trading fees with no hidden costs. Keep more of your earnings.',
+                icon: '⚖️',
+                title: 'Fair Resolution',
+                description: 'Market outcomes determined by decentralized oracles, not by platform operators.',
               },
             ].map((feature) => (
               <div
                 key={feature.title}
-                className="group p-6 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl hover:border-[var(--color-primary)]/50 hover:shadow-lg hover:shadow-[var(--color-primary)]/10 transition-all"
+                className="p-6 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl"
               >
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[var(--color-primary)]/20 to-[var(--color-secondary)]/20 flex items-center justify-center text-[var(--color-primary)] mb-4 group-hover:scale-110 transition-transform">
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-semibold text-[var(--text-primary)] mb-2">
+                <div className="text-3xl mb-4">{feature.icon}</div>
+                <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-2">
                   {feature.title}
                 </h3>
-                <p className="text-[var(--text-muted)]">
+                <p className="text-sm text-[var(--text-muted)]">
                   {feature.description}
                 </p>
               </div>
@@ -152,26 +221,43 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-[var(--color-primary)]/10 to-[var(--color-secondary)]/10">
+      <section className="py-16">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-[var(--text-primary)] mb-4">
             Ready to Start Trading?
           </h2>
-          <p className="text-[var(--text-secondary)] mb-8">
-            Connect your wallet and start predicting the future today.
-            Join thousands of traders already earning on PredictX.
+          <p className="text-[var(--text-secondary)] mb-6">
+            Get testnet ETH and start trading risk-free. No real money required.
           </p>
-          <Link
-            href="/create"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white font-semibold rounded-xl hover:shadow-[var(--shadow-glow)] hover:-translate-y-0.5 transition-all"
-          >
-            Create Your First Market
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-          </Link>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href="https://sepoliafaucet.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 bg-[var(--bg-elevated)] border border-[var(--border-color)] text-[var(--text-primary)] font-medium rounded-xl"
+            >
+              Get Testnet ETH
+            </a>
+            <Link
+              href="#markets"
+              className="px-6 py-3 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white font-semibold rounded-xl"
+            >
+              Start Trading
+            </Link>
+          </div>
         </div>
       </section>
+
+      {/* Footer Legal Notice */}
+      <div className="py-4 border-t border-[var(--border-color)] bg-[var(--bg-card)]">
+        <p className="text-center text-xs text-[var(--text-muted)]">
+          By using this platform, you agree to our{' '}
+          <Link href="/terms" className="text-[var(--color-primary)]">Terms of Service</Link>
+          {' '}and{' '}
+          <Link href="/privacy" className="text-[var(--color-primary)]">Privacy Policy</Link>.
+          Not available in US, UK, or restricted jurisdictions.
+        </p>
+      </div>
     </div>
   );
 }
